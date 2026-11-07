@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: perapat_portfolio_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://perapat:spu2026cyber@postgres:5432/perapat_portfolio?schema=public
+      - ADMIN_PIN=spu2026
+      - NODE_ENV=production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - portfolio_net
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: perapat_portfolio_db
+    restart: always
+    environment:
+      POSTGRES_USER: perapat
+      POSTGRES_PASSWORD: spu2026cyber
+      POSTGRES_DATABASE: perapat_portfolio
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U perapat -d perapat_portfolio"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - portfolio_net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  portfolio_net:
+    driver: bridge

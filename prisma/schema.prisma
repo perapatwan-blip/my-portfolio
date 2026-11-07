@@ -1,0 +1,82 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  id            String   @id @default(cuid())
+  titleTh       String
+  titleEn       String
+  category      String   // Full-Stack, Frontend, Backend
+  tags          String   // Comma separated
+  descriptionTh String
+  descriptionEn String
+  imageUrl      String?
+  demoUrl       String?
+  githubUrl     String?
+  featured      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  roleTh      String
+  roleEn      String
+  companyTh   String
+  companyEn   String
+  tag         String   @default("Practical Experience")
+  duration    String
+  bulletsTh   String   // Newline separated
+  bulletsEn   String   // Newline separated
+  skills      String   // Comma separated
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Certification {
+  id           String   @id @default(cuid())
+  titleTh      String
+  titleEn      String
+  issuerTh     String
+  issuerEn     String
+  issueDate    String
+  credentialId String?
+  pdfUrl       String?
+  verifyUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model QuickNote {
+  id        String   @id @default(cuid())
+  text      String
+  priority  String   @default("normal") // normal, high, gold
+  createdAt DateTime @default(now())
+}
+
+model SocialConfig {
+  id          String   @id @default("default")
+  logoLink    String   @default("#overview")
+  igUrl       String   @default("https://instagram.com/p.perapat_")
+  igLabel     String   @default("@p.perapat_")
+  fbUrl       String   @default("https://www.facebook.com/anuwat.rungsin")
+  fbLabel     String   @default("Perapat Wanna")
+  lineUrl     String   @default("https://line.me/ti/p/~0631568992")
+  lineLabel   String   @default("0631568992")
+  githubUrl   String   @default("https://github.com/perapat-w")
+  linkedinUrl String   @default("https://linkedin.com/in/perapat-wanna")
+  phone       String   @default("063-156-8992")
+  email       String   @default("perapat.wan@spu.ac.th")
+  updatedAt   DateTime @updatedAt
+}
+
+model AdminSession {
+  id        String   @id @default(cuid())
+  passcode  String   @default("spu2026")
+  updatedAt DateTime @updatedAt
+}

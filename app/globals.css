@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-crimson: #dc2626;
+  --color-crimson-glow: #ef4444;
+  --color-gold: #d4af37;
+  --color-gold-amber: #f59e0b;
+  --color-bg-dark: #050508;
+}
+
+body {
+  background-color: var(--color-bg-dark);
+  color: #ffffff;
+  font-family: 'Prompt', 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Hardware accelerated 60FPS rotating laser neon borders */
+@keyframes spinBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatGlowOrb {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.35; }
+  50% { transform: translateY(-16px) scale(1.06); opacity: 0.65; }
+}
+
+@keyframes laserPulse {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.7)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.9)); }
+}
+
+/* Premium Cyberpunk Bento Card with Red & Gold Rotating Border */
+.bento-card {
+  position: relative;
+  background: rgba(13, 13, 19, 0.85);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  will-change: transform, box-shadow;
+}
+
+.bento-card::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: conic-gradient(
+    transparent 15%,
+    #dc2626 35%,
+    #d4af37 50%,
+    #ef4444 65%,
+    #f59e0b 80%,
+    transparent 95%
+  );
+  animation: spinBorder 7s linear infinite;
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.bento-card::after {
+  content: '';
+  position: absolute;
+  inset: 1.8px;
+  background: rgba(10, 10, 15, 0.94);
+  border-radius: calc(1.5rem - 1.8px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bento-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.bento-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(220, 38, 38, 0.75);
+  box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.35), 0 0 30px rgba(212, 175, 55, 0.25);
+}
+
+.bento-card:hover::before {
+  opacity: 0.95;
+  animation-duration: 4.5s;
+}
+
+/* Floating Navigation Bar */
+.floating-nav {
+  position: relative;
+  background: rgba(12, 12, 18, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(220, 38, 38, 0.2);
+}
+
+/* Profile Avatar Rotating Cyber Frame */
+.avatar-glow-frame {
+  position: relative;
+  border-radius: 2rem;
+  padding: 3.5px;
+  overflow: hidden;
+}
+
+.avatar-glow-frame::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: conic-gradient(#dc2626, #d4af37, #ef4444, #f59e0b, #dc2626);
+  animation: spinBorder 4s linear infinite;
+  z-index: 0;
+}
+
+/* Dark charcoal/black grid-pattern background */
+.cyber-bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(220, 38, 38, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 38, 38, 0.05) 1px, transparent 1px);
+}
+
+.cyber-bg-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.02) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Ambient Red & Gold Lighting Orbs */
+.glow-orb-crimson {
+  position: fixed;
+  top: -8%;
+  left: 10%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.18) 0%, rgba(220, 38, 38, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatGlowOrb 9s ease-in-out infinite;
+}
+
+.glow-orb-gold {
+  position: fixed;
+  bottom: -10%;
+  right: 5%;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(245, 158, 11, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatGlowOrb 11s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.glow-orb-center {
+  position: fixed;
+  top: 40%;
+  left: 45%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom Red & Gold Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07070a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #dc2626 0%, #d4af37 100%);
+  border-radius: 9999px;
+  border: 2px solid #07070a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ef4444 0%, #f59e0b 100%);
+}
+
+/* Text glow utilities */
+.text-glow-red {
+  text-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
